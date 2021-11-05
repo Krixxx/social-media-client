@@ -8,6 +8,8 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
+  GET_ALL_POSTS_SUCCESS,
+  GET_ALL_POSTS_ERROR,
 } from '../utils/actions';
 
 import reducer from './reducer';
@@ -16,9 +18,12 @@ const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
 const initialState = {
-  user: null,
+  user: user ? JSON.parse(user) : null,
+  token: token,
   isLoading: false,
   showAlert: false,
+  posts: [],
+  url: process.env.SERVER_URI,
 };
 
 const AppContext = React.createContext();
@@ -80,7 +85,20 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGOUT_USER });
   };
 
-  const value = { ...state, setLoading, register, login, logout };
+  // get all posts
+  const getAllPosts = async () => {
+    setLoading();
+
+    try {
+      const { data } = await axios.get('/public');
+
+      dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data.posts });
+    } catch (error) {
+      dispatch({ type: GET_ALL_POSTS_ERROR });
+    }
+  };
+
+  const value = { ...state, setLoading, register, login, logout, getAllPosts };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

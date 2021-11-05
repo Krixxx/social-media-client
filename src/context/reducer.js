@@ -3,6 +3,8 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
+  GET_ALL_POSTS_SUCCESS,
+  GET_ALL_POSTS_ERROR,
 } from '../utils/actions';
 
 const reducer = (state, action) => {
@@ -24,6 +26,15 @@ const reducer = (state, action) => {
   //set user to null and do not show alert.
   if (action.type === LOGOUT_USER) {
     return { ...state, user: null, showAlert: false };
+  }
+
+  // get all jobs
+  if (action.type === GET_ALL_POSTS_SUCCESS) {
+    return { ...state, isLoading: false, posts: action.payload };
+  }
+
+  if (action.type === GET_ALL_POSTS_ERROR) {
+    return { ...state, isLoading: false };
   }
 
   throw new Error(`No such action: ${action}`);
