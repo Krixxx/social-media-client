@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.SERVER_URI;
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URI;
 
 axios.interceptors.request.use(function (req) {
   const user = localStorage.getItem('user');
