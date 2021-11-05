@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { useAppContext } from '../context/appContext';
+import { useUserContext } from '../context/userContext';
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -17,7 +17,7 @@ const Login = () => {
     password: '',
   });
 
-  const { isLoading, login, showAlert, user } = useAppContext();
+  const { isLoading, login, showAlert, user } = useUserContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();

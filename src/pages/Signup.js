@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { useAppContext } from '../context/appContext';
+import { useUserContext } from '../context/userContext';
 
 const Signup = () => {
   const [values, setValues] = useState({
@@ -22,7 +22,7 @@ const Signup = () => {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
 
-  const { isLoading, register, showAlert, user } = useAppContext();
+  const { isLoading, register, showAlert, user } = useUserContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();

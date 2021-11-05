@@ -3,11 +3,9 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
-  GET_ALL_POSTS_SUCCESS,
-  GET_ALL_POSTS_ERROR,
 } from '../utils/actions';
 
-const reducer = (state, action) => {
+const userReducer = (state, action) => {
   // set loading state to true
   if (action.type === SET_LOADING) {
     return { ...state, isLoading: true, showAlert: false };
@@ -28,16 +26,7 @@ const reducer = (state, action) => {
     return { ...state, user: null, showAlert: false };
   }
 
-  // get all jobs
-  if (action.type === GET_ALL_POSTS_SUCCESS) {
-    return { ...state, isLoading: false, posts: action.payload };
-  }
-
-  if (action.type === GET_ALL_POSTS_ERROR) {
-    return { ...state, isLoading: false };
-  }
-
   throw new Error(`No such action: ${action}`);
 };
 
-export default reducer;
+export default userReducer;

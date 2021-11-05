@@ -8,11 +8,9 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
-  GET_ALL_POSTS_SUCCESS,
-  GET_ALL_POSTS_ERROR,
 } from '../utils/actions';
 
-import reducer from './reducer';
+import userReducer from '../reducers/userReducer';
 
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
@@ -22,14 +20,12 @@ const initialState = {
   token: token,
   isLoading: false,
   showAlert: false,
-  posts: [],
-  url: process.env.SERVER_URI,
 };
 
-const AppContext = React.createContext();
+const UserContext = React.createContext();
 
-const AppProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+const UserProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(userReducer, initialState);
 
   //   set loading to true
   const setLoading = () => {
@@ -85,26 +81,13 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGOUT_USER });
   };
 
-  // get all posts
-  const getAllPosts = async () => {
-    setLoading();
+  const value = { ...state, setLoading, register, login, logout };
 
-    try {
-      const { data } = await axios.get('/public');
-
-      dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data.posts });
-    } catch (error) {
-      dispatch({ type: GET_ALL_POSTS_ERROR });
-    }
-  };
-
-  const value = { ...state, setLoading, register, login, logout, getAllPosts };
-
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
-export const useAppContext = () => {
-  return useContext(AppContext);
+export const useUserContext = () => {
+  return useContext(UserContext);
 };
 
-export { AppProvider };
+export { UserProvider };
