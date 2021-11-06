@@ -16,16 +16,16 @@ const Post = ({ post }) => {
     createdAt,
     image,
     userHandle,
-    _id: postId,
-    commentCount,
-    likeCount,
-    createdBy,
+    // _id: postId,
+    // commentCount,
+    // likeCount,
+    // createdBy,
   } = post;
   return (
     <Wrapper>
       <Card className='card'>
         <div className='img-container'>
-          <img src={`http://localhost:5000/${image}`} />
+          <img src={`http://localhost:5000/${image}`} alt='user' />
         </div>
         <CardContent className='content'>
           <Typography
@@ -56,7 +56,7 @@ const Wrapper = styled.div`
     object-fit: cover;
   } */
   .img-container {
-    width: 200px;
+    width: 150px;
   }
   .img-container img {
     width: 100%;

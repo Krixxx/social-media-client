@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import { Navigate } from 'react-router-dom';
 
 const Home = () => {
-  const { isLoading, user } = useUserContext();
+  const { user } = useUserContext();
   const { isLoadingData, getAllPosts, posts } = useDataContext();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Home = () => {
             <p>Loading..</p>
           ) : posts ? (
             posts.map((post, index) => {
-              return <Post key={index} post={post} />;
+              return <Post key={post._id} post={post} />;
             })
           ) : (
             <p>Loading...</p>
