@@ -5,6 +5,7 @@ import '../axios';
 
 import {
   SET_LOADING,
+  GET_CURRENT_USER,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
@@ -17,6 +18,7 @@ const user = localStorage.getItem('user');
 
 const initialState = {
   user: user ? JSON.parse(user) : null,
+  userData: {},
   token: token,
   isLoading: false,
   showAlert: false,
@@ -72,6 +74,19 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  // get user data
+  const getUserData = async () => {
+    setLoading();
+
+    try {
+      const { data } = await axios.get('/users');
+      dispatch({ type: GET_CURRENT_USER, payload: data.user });
+    } catch (error) {
+      //set loading to false, set user to null and show alert
+      dispatch({ type: REGISTER_USER_ERROR });
+    }
+  };
+
   //   log out user
   const logout = () => {
     // clear localStorage
@@ -81,7 +96,7 @@ const UserProvider = ({ children }) => {
     dispatch({ type: LOGOUT_USER });
   };
 
-  const value = { ...state, setLoading, register, login, logout };
+  const value = { ...state, getUserData, setLoading, register, login, logout };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

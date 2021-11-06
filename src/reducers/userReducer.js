@@ -1,5 +1,6 @@
 import {
   SET_LOADING,
+  GET_CURRENT_USER,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
@@ -13,12 +14,20 @@ const userReducer = (state, action) => {
 
   //set loading to false and set user
   if (action.type === REGISTER_USER_SUCCESS) {
-    return { ...state, isLoading: false, user: action.payload };
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload,
+    };
   }
 
   //set loading to false, set user to null and show alert
   if (action.type === REGISTER_USER_ERROR) {
     return { ...state, isLoading: false, user: null, showAlert: true };
+  }
+
+  if (action.type === GET_CURRENT_USER) {
+    return { ...state, isLoading: false, userData: action.payload };
   }
 
   //set user to null and do not show alert.

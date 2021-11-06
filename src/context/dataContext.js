@@ -36,7 +36,6 @@ const DataProvider = ({ children }) => {
 
     try {
       const { data } = await axios.get('/public');
-
       dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data.posts });
     } catch (error) {
       dispatch({ type: GET_ALL_POSTS_ERROR });

@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 // MUI
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
 const Post = ({ post }) => {
@@ -26,11 +24,9 @@ const Post = ({ post }) => {
   return (
     <Wrapper>
       <Card className='card'>
-        <CardMedia
-          className='image'
-          image={`http://localhost:5000/${image}`}
-          title='Profile image'
-        />
+        <div className='img-container'>
+          <img src={`http://localhost:5000/${image}`} />
+        </div>
         <CardContent className='content'>
           <Typography
             className='handle'
@@ -55,8 +51,15 @@ const Wrapper = styled.div`
     display: flex;
     margin-bottom: 20px;
   }
-  .image {
+  /* .image {
     min-width: 200px;
+    object-fit: cover;
+  } */
+  .img-container {
+    width: 200px;
+  }
+  .img-container img {
+    width: 100%;
     object-fit: cover;
   }
   .content {

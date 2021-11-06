@@ -28,8 +28,6 @@ const Login = () => {
       email,
       password,
     };
-
-    login(userInput);
   };
 
   const handleChange = (e) => {
