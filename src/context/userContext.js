@@ -9,6 +9,9 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
+  UPLOAD_IMAGE_ERROR,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from '../utils/actions';
 
 import userReducer from '../reducers/userReducer';
@@ -96,7 +99,54 @@ const UserProvider = ({ children }) => {
     dispatch({ type: LOGOUT_USER });
   };
 
-  const value = { ...state, getUserData, setLoading, register, login, logout };
+  const uploadImage = async (formData) => {
+    setLoading();
+
+    let imageValue;
+    try {
+      const {
+        data: {
+          image: { src },
+        },
+      } = await axios.post('/users/uploads', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      imageValue = src;
+
+      updateUser({ image: imageValue });
+      // const { data } = await axios.patch('/users', { image: imageValue });
+
+      // dispatch({ type: UPLOAD_IMAGE_SUCCESS, payload: data.user });
+    } catch (error) {
+      imageValue = null;
+
+      dispatch({ type: UPLOAD_IMAGE_ERROR });
+    }
+  };
+
+  const updateUser = async (userData) => {
+    setLoading();
+
+    try {
+      const { data } = await axios.patch('/users', { ...userData });
+
+      dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
+    } catch (error) {
+      dispatch({ type: UPDATE_USER_ERROR });
+    }
+  };
+
+  const value = {
+    ...state,
+    getUserData,
+    setLoading,
+    register,
+    login,
+    logout,
+    uploadImage,
+    updateUser,
+  };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

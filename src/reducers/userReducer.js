@@ -4,6 +4,9 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
   LOGOUT_USER,
+  UPLOAD_IMAGE_ERROR,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from '../utils/actions';
 
 const userReducer = (state, action) => {
@@ -33,6 +36,17 @@ const userReducer = (state, action) => {
   //set user to null and do not show alert.
   if (action.type === LOGOUT_USER) {
     return { ...state, user: null, showAlert: false };
+  }
+
+  if (action.type === UPLOAD_IMAGE_ERROR) {
+    return { ...state, isLoading: false };
+  }
+  if (action.type === UPDATE_USER_SUCCESS) {
+    return { ...state, isLoading: false, userData: action.payload };
+  }
+
+  if (action.type === UPDATE_USER_ERROR) {
+    return { ...state, isLoading: false };
   }
 
   throw new Error(`No such action: ${action}`);
