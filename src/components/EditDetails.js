@@ -113,6 +113,9 @@ const Wrapper = styled.div`
   .textfield {
     margin: 5px auto;
   }
+  .button {
+    float: right;
+  }
 `;
 
 export default EditDetails;

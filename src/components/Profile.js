@@ -102,12 +102,14 @@ const Profile = () => {
                   <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
                 </div>
               </div>
-              <Tooltip title='Logout' placement='top'>
-                <IconButton className='logout' onClick={handleLogout}>
-                  <KeyboardReturn color='primary' />
-                </IconButton>
-              </Tooltip>
-              <EditDetails />
+              <div>
+                <Tooltip title='Logout' placement='top'>
+                  <IconButton className='logout' onClick={handleLogout}>
+                    <KeyboardReturn color='primary' />
+                  </IconButton>
+                </Tooltip>
+                <EditDetails />
+              </div>
             </div>
           </Paper>
         ) : (
@@ -188,8 +190,7 @@ const Wrapper = styled.div`
     gap: 5px;
   }
   .logout {
-    display: block;
-    text-align: left;
+    float: left;
   }
 `;
 
