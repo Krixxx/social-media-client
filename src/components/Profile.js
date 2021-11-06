@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -22,7 +22,8 @@ import KeyboardReturn from '@mui/icons-material/KeyboardReturn';
 import { useUserContext } from '../context/userContext';
 
 const Profile = () => {
-  const { user, userData, isLoading, uploadImage, logout } = useUserContext();
+  const { user, userData, getUserData, isLoading, uploadImage, logout } =
+    useUserContext();
 
   const handleLogout = () => {
     logout();
@@ -43,6 +44,11 @@ const Profile = () => {
     const fileInput = document.getElementById('imageInput');
     fileInput.click();
   };
+
+  useEffect(() => {
+    getUserData();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Wrapper>
