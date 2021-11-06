@@ -7,11 +7,12 @@ import Grid from '@mui/material/Grid';
 import { Navigate } from 'react-router-dom';
 
 const Home = () => {
-  const { user } = useUserContext();
+  const { user, getUserData } = useUserContext();
   const { isLoadingData, getAllPosts, posts } = useDataContext();
 
   useEffect(() => {
     getAllPosts();
+    getUserData();
     // eslint-disable-next-line
   }, []);
 

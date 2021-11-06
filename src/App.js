@@ -1,4 +1,4 @@
-import { Home, Login, Signup, Error } from './pages';
+import { Home, Login, Signup } from './pages';
 import { Navbar, PrivateRoute } from './components';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -12,7 +12,7 @@ function App() {
           <PrivateRoute exact path='/' element={<Home />} />
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/register' element={<Signup />} />
-          <Route path='*' element={<Error />} />
+          {/* <Route path='*' element={<Error />} /> */}
         </Routes>
       </div>
     </Router>

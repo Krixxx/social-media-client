@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Link } from 'react-router-dom';
 
 // MUI
 import Card from '@mui/material/Card';
@@ -19,7 +20,7 @@ const Post = ({ post }) => {
     // _id: postId,
     // commentCount,
     // likeCount,
-    // createdBy,
+    createdBy,
   } = post;
   return (
     <Wrapper>
@@ -31,8 +32,9 @@ const Post = ({ post }) => {
           <Typography
             className='handle'
             variant='h5'
-            // component={Link}
-            // to={`/users/${createdBy}`}
+            color='primary'
+            component={Link}
+            to={`/users/${createdBy}`}
           >
             {userHandle}
           </Typography>
@@ -57,6 +59,8 @@ const Wrapper = styled.div`
   } */
   .img-container {
     width: 150px;
+    padding: 10px;
+    /* border: 1px solid black; */
   }
   .img-container img {
     width: 100%;
@@ -64,9 +68,6 @@ const Wrapper = styled.div`
   }
   .content {
     padding: 25px;
-  }
-  .handle {
-    color: hsl(209, 61%, 16%);
   }
   .date {
     color: hsl(210, 31%, 80%);

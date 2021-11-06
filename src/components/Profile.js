@@ -1,33 +1,48 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { EditDetails } from '../components';
 
 // MUI
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 
 //MUI icons
 import LocationOn from '@mui/icons-material/LocationOn';
 import LinkIcon from '@mui/icons-material/Link';
 import CalendarToday from '@mui/icons-material/CalendarToday';
+import IconButton from '@mui/material/IconButton';
+import Edit from '@mui/icons-material/Edit';
+import KeyboardReturn from '@mui/icons-material/KeyboardReturn';
 
 import { useUserContext } from '../context/userContext';
 
 const Profile = () => {
-  const { _id: id, user, userData, getUserData, isLoading } = useUserContext();
+  const { user, userData, isLoading, uploadImage, logout } = useUserContext();
 
-  useEffect(() => {
-    getUserData();
-    // eslint-disable-next-line
-  }, []);
+  const handleLogout = () => {
+    logout();
+  };
 
-  // When loading Home screen, we get following error: GET http://localhost:5000/undefined 404 (Not Found)
-  // This is caused by profile image loading. At first, image is undefined (when we get an error), and then we fetch image address with useEffect()
+  const { _id: id, name, createdAt, image, location, website } = userData;
 
-  const { name, createdAt, image, location, website } = userData;
+  const handleImageChange = (e) => {
+    const imageFile = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    uploadImage(formData);
+  };
+
+  const handleEditPicture = (e) => {
+    const fileInput = document.getElementById('imageInput');
+    fileInput.click();
+  };
 
   return (
     <Wrapper>
@@ -36,9 +51,18 @@ const Profile = () => {
           <Paper className='paper'>
             <div className='profile'>
               <div className='image-wrapper'>
-                {image && (
-                  <img src={`http://localhost:5000/${image}`} alt='profile' />
-                )}
+                {image && <img src={image} alt='profile' />}
+                <input
+                  type='file'
+                  id='imageInput'
+                  hidden='hidden'
+                  onChange={handleImageChange}
+                />
+                <Tooltip title='Edit profile picture' placement='top'>
+                  <IconButton onClick={handleEditPicture} className='button'>
+                    <Edit color='primary' />
+                  </IconButton>
+                </Tooltip>
               </div>
               <hr />
               <div className='profile-details'>
@@ -46,6 +70,7 @@ const Profile = () => {
                   component={Link}
                   to={`/users/${id}`}
                   color='primary'
+                  className='user-link'
                   variant='h5'
                 >
                   @{name}
@@ -71,6 +96,12 @@ const Profile = () => {
                   <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
                 </div>
               </div>
+              <Tooltip title='Logout' placement='top'>
+                <IconButton className='logout' onClick={handleLogout}>
+                  <KeyboardReturn color='primary' />
+                </IconButton>
+              </Tooltip>
+              <EditDetails />
             </div>
           </Paper>
         ) : (
@@ -118,28 +149,41 @@ const Wrapper = styled.div`
     width: 200px;
     height: 200px;
     margin: 0 auto;
+    text-align: center;
     position: relative;
+  }
+  .image-wrapper .button {
+    position: absolute;
+    top: 85%;
+    left: 75%;
   }
   .image-wrapper img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
-    /* border-radius: 50%; */
+    border-radius: 50%;
   }
-  .profile-details {
-    text-align: center;
+  .user-link {
+    text-decoration: none;
   }
-  .profile-details span svg {
-    vertical-align: middle;
+  .profile-details a {
+    color: #00bcd4;
   }
   hr {
-    height: 10px;
-    visibility: hidden;
+    border: none;
+    margin: 0 0 10px 0;
+    /* height: 10px; */
+    /* visibility: hidden; */
   }
   .item {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
+  }
+  .logout {
+    display: block;
+    text-align: left;
   }
 `;
 
