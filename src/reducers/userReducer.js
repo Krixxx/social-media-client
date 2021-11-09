@@ -7,6 +7,9 @@ import {
   UPLOAD_IMAGE_ERROR,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  LIKE_POST,
+  UNLIKE_POST,
+  GET_ALL_LIKES,
 } from '../utils/actions';
 
 const userReducer = (state, action) => {
@@ -47,6 +50,34 @@ const userReducer = (state, action) => {
 
   if (action.type === UPDATE_USER_ERROR) {
     return { ...state, isLoading: false };
+  }
+
+  if (action.type === GET_ALL_LIKES) {
+    return {
+      ...state,
+      likes: [...action.payload],
+    };
+  }
+
+  if (action.type === LIKE_POST) {
+    return {
+      ...state,
+      likes: [
+        ...state.likes,
+        {
+          userId: action.payload.userId,
+          postId: action.payload.postId,
+          _id: action.payload._id,
+        },
+      ],
+    };
+  }
+
+  if (action.type === UNLIKE_POST) {
+    return {
+      ...state,
+      likes: state.likes.filter((like) => like.postId !== action.payload),
+    };
   }
 
   throw new Error(`No such action: ${action}`);

@@ -12,6 +12,9 @@ import {
   UPLOAD_IMAGE_ERROR,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  LIKE_POST,
+  UNLIKE_POST,
+  GET_ALL_LIKES,
 } from '../utils/actions';
 
 import userReducer from '../reducers/userReducer';
@@ -25,6 +28,7 @@ const initialState = {
   token: token,
   isLoading: false,
   showAlert: false,
+  likes: [],
 };
 
 const UserContext = React.createContext();
@@ -32,12 +36,17 @@ const UserContext = React.createContext();
 const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
 
-  //   set loading to true
+  /**
+   * Set loading state to true
+   */
   const setLoading = () => {
     dispatch({ type: SET_LOADING });
   };
 
-  //   register user
+  /**
+   * Regiter user in server
+   * @param {Object} userInput User registration information - e-mail, password, username
+   */
   const register = async (userInput) => {
     setLoading();
 
@@ -59,7 +68,10 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  //   login user
+  /**
+   * Log user into server
+   * @param {Object} userInput User login informaiton - email and password
+   */
   const login = async (userInput) => {
     setLoading();
 
@@ -77,20 +89,40 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  // get user data
+  /**
+   * Get all user likes
+   */
+  const getAllUserLikes = async () => {
+    try {
+      const { data } = await axios.get('/users/likes');
+
+      dispatch({ type: GET_ALL_LIKES, payload: data.likes });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /**
+   * Get all user datd
+   */
   const getUserData = async () => {
     setLoading();
 
     try {
       const { data } = await axios.get('/users');
+
       dispatch({ type: GET_CURRENT_USER, payload: data.user });
+
+      getAllUserLikes();
     } catch (error) {
       //set loading to false, set user to null and show alert
       dispatch({ type: REGISTER_USER_ERROR });
     }
   };
 
-  //   log out user
+  /**
+   * Log out user from server
+   */
   const logout = () => {
     // clear localStorage
     localStorage.removeItem('user');
@@ -99,6 +131,11 @@ const UserProvider = ({ children }) => {
     dispatch({ type: LOGOUT_USER });
   };
 
+  /**
+   * Load user image
+   * We use updateUser function, to update user image
+   * @param {*} formData User image file
+   */
   const uploadImage = async (formData) => {
     setLoading();
 
@@ -125,6 +162,10 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Update user data fields
+   * @param {Object} userData User information
+   */
   const updateUser = async (userData) => {
     setLoading();
 
@@ -137,6 +178,22 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Add like
+   * @param {Object} like Like object
+   */
+  const likeUserPost = (like) => {
+    dispatch({ type: LIKE_POST, payload: like });
+  };
+
+  /**
+   * Remove like
+   * @param {Object} like Like object
+   */
+  const unLikeUserPost = (like) => {
+    dispatch({ type: UNLIKE_POST, payload: like });
+  };
+
   const value = {
     ...state,
     getUserData,
@@ -146,6 +203,8 @@ const UserProvider = ({ children }) => {
     logout,
     uploadImage,
     updateUser,
+    likeUserPost,
+    unLikeUserPost,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
