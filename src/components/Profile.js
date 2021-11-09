@@ -2,20 +2,18 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { EditDetails } from '../components';
+import { EditDetails, CustomButton } from '../components';
 
 // MUI
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
 
 //MUI icons
 import LocationOn from '@mui/icons-material/LocationOn';
 import LinkIcon from '@mui/icons-material/Link';
 import CalendarToday from '@mui/icons-material/CalendarToday';
-import IconButton from '@mui/material/IconButton';
 import Edit from '@mui/icons-material/Edit';
 import KeyboardReturn from '@mui/icons-material/KeyboardReturn';
 
@@ -64,11 +62,14 @@ const Profile = () => {
                   hidden='hidden'
                   onChange={handleImageChange}
                 />
-                <Tooltip title='Edit profile picture' placement='top'>
-                  <IconButton onClick={handleEditPicture} className='button'>
-                    <Edit color='primary' />
-                  </IconButton>
-                </Tooltip>
+                <CustomButton
+                  tip='Edit profile picture'
+                  onClick={handleEditPicture}
+                  btnClassName='button'
+                  tipPlacement='top'
+                >
+                  <Edit color='primary' />
+                </CustomButton>
               </div>
               <hr />
               <div className='profile-details'>
@@ -103,11 +104,14 @@ const Profile = () => {
                 </div>
               </div>
               <div>
-                <Tooltip title='Logout' placement='top'>
-                  <IconButton className='logout' onClick={handleLogout}>
-                    <KeyboardReturn color='primary' />
-                  </IconButton>
-                </Tooltip>
+                <CustomButton
+                  tip='Logout'
+                  onClick={handleLogout}
+                  btnClassName='logout'
+                  tipPlacement='top'
+                >
+                  <KeyboardReturn color='primary' />
+                </CustomButton>
                 <EditDetails />
               </div>
             </div>
@@ -180,8 +184,6 @@ const Wrapper = styled.div`
   hr {
     border: none;
     margin: 0 0 10px 0;
-    /* height: 10px; */
-    /* visibility: hidden; */
   }
   .item {
     display: flex;

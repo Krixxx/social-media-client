@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import CustomButton from './CustomButton';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,9 +10,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import Edit from '@mui/icons-material/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { useUserContext } from '../context/userContext';
 
@@ -63,11 +63,14 @@ const EditDetails = () => {
 
   return (
     <Wrapper>
-      <Tooltip title='Edit details' placement='top'>
-        <IconButton onClick={handleOpen} className='button'>
-          <Edit color='primary' />
-        </IconButton>
-      </Tooltip>
+      <CustomButton
+        tip='Edit details'
+        onClick={handleOpen}
+        btnClassName='button'
+        tipPlacement='top'
+      >
+        <EditIcon color='primary' />
+      </CustomButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
         <DialogTitle>Edit your details</DialogTitle>
         <DialogContent>
