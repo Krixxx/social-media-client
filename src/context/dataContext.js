@@ -10,6 +10,7 @@ import {
   GET_ALL_POSTS_SUCCESS,
   GET_ALL_POSTS_ERROR,
   LIKE_POST,
+  DELETE_POST,
 } from '../utils/actions';
 
 import dataReducer from '../reducers/dataReducer';
@@ -96,7 +97,28 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  const value = { ...state, setLoading, getAllPosts, likePost, unLikePost };
+  /**
+   * Delete post from server
+   * @param {String} postId Post ID, which we need to delete
+   */
+  const deletePost = async (postId) => {
+    try {
+      await axios.delete(`/posts/${postId}`);
+
+      dispatch({ type: DELETE_POST, payload: postId });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const value = {
+    ...state,
+    setLoading,
+    getAllPosts,
+    likePost,
+    unLikePost,
+    deletePost,
+  };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

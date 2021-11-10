@@ -12,7 +12,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { CustomButton } from '.';
+import { CustomButton, DeletePost } from '.';
 
 import { useUserContext } from '../context/userContext';
 import { useDataContext } from '../context/dataContext';
@@ -20,7 +20,7 @@ import { useDataContext } from '../context/dataContext';
 const Post = ({ post }) => {
   dayjs.extend(relativeTime);
 
-  const { userData, likes } = useUserContext();
+  const { user, userData, likes } = useUserContext();
   const { likePost, unLikePost } = useDataContext();
 
   /**
@@ -77,7 +77,7 @@ const Post = ({ post }) => {
   /**
    * Like button logic. Depends if we have liked the post or not, button design changes.
    */
-  const likeButton = !userData ? (
+  const likeButton = !user ? (
     <CustomButton tip='like'>
       <Link to='/login'>
         <FavoriteBorder color='primary' />
@@ -93,11 +93,17 @@ const Post = ({ post }) => {
     </CustomButton>
   );
 
+  /**
+   * Delete button logic. null, if user is not logged in our post is not created by logged in user
+   */
+  const deleteButton =
+    user && createdBy === userData._id ? <DeletePost postId={postId} /> : null;
+
   return (
     <Wrapper>
       <Card className='card'>
         <div className='img-container'>
-          <img src={`http://localhost:5000/${image}`} alt='user' />
+          <img src={image} alt='user' />
         </div>
         <CardContent className='content'>
           <Typography
@@ -109,6 +115,7 @@ const Post = ({ post }) => {
           >
             {userHandle}
           </Typography>
+          {deleteButton}
           <Typography className='date' variant='body2'>
             {dayjs(createdAt).fromNow()}
           </Typography>
@@ -129,6 +136,7 @@ const Wrapper = styled.div`
   .card {
     display: flex;
     margin-bottom: 20px;
+    position: relative;
   }
   .img-container {
     width: 150px;

@@ -4,5 +4,14 @@ import PrivateRoute from './PrivateRoute';
 import Profile from './Profile';
 import EditDetails from './EditDetails';
 import CustomButton from './CustomButton';
+import DeletePost from './DeletePost';
 
-export { Navbar, Post, PrivateRoute, Profile, EditDetails, CustomButton };
+export {
+  Navbar,
+  Post,
+  PrivateRoute,
+  Profile,
+  EditDetails,
+  CustomButton,
+  DeletePost,
+};

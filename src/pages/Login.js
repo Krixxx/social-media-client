@@ -107,6 +107,7 @@ const Login = () => {
 const Wrapper = styled.div`
   .form {
     text-align: center;
+    padding: 10px;
   }
   .center {
     margin: 0 auto;

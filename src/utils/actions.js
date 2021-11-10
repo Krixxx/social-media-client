@@ -17,3 +17,4 @@ export const GET_ALL_POSTS_SUCCESS = 'GET_ALL_POSTS_SUCCESS';
 export const GET_ALL_POSTS_ERROR = 'GET_ALL_POSTS_ERROR';
 export const LIKE_POST = 'LIKE_POST';
 export const UNLIKE_POST = 'UNLIKE_POST';
+export const DELETE_POST = 'DELETE_POST';

@@ -3,7 +3,7 @@ import {
   GET_ALL_POSTS_SUCCESS,
   GET_ALL_POSTS_ERROR,
   LIKE_POST,
-  UNLIKE_POST,
+  DELETE_POST,
 } from '../utils/actions';
 
 const dataReducer = (state, action) => {
@@ -34,6 +34,17 @@ const dataReducer = (state, action) => {
     state.posts[index] = action.payload;
 
     return { ...state, isLoadingData: false };
+  }
+
+  /**
+   * Delete post from server and remove from posts array
+   */
+  if (action.type === DELETE_POST) {
+    let index = state.posts.findIndex((post) => post._id === action.payload);
+
+    state.posts.splice(index, 1);
+
+    return { ...state };
   }
 
   throw new Error(`No such action: ${action}`);
