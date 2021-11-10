@@ -5,6 +5,7 @@ import Profile from './Profile';
 import EditDetails from './EditDetails';
 import CustomButton from './CustomButton';
 import DeletePost from './DeletePost';
+import CreatePost from './CreatePost';
 
 export {
   Navbar,
@@ -14,4 +15,5 @@ export {
   EditDetails,
   CustomButton,
   DeletePost,
+  CreatePost,
 };

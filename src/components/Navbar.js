@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CustomButton from './CustomButton';
+import { CustomButton, CreatePost } from '../components';
 
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 
 // Icons
-import AddIcon from '@mui/icons-material/Add';
 import HomeIcon from '@mui/icons-material/Home';
 import Notifications from '@mui/icons-material/Notifications';
 
@@ -24,9 +23,7 @@ const Navbar = () => {
       <Toolbar className='nav-container'>
         {user ? (
           <>
-            <CustomButton tip='Create a Post'>
-              <AddIcon />
-            </CustomButton>
+            <CreatePost />
             <Link to='/'>
               <CustomButton tip='Home'>
                 <HomeIcon />

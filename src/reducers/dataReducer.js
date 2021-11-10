@@ -4,6 +4,8 @@ import {
   GET_ALL_POSTS_ERROR,
   LIKE_POST,
   DELETE_POST,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_ERROR,
 } from '../utils/actions';
 
 const dataReducer = (state, action) => {
@@ -45,6 +47,19 @@ const dataReducer = (state, action) => {
     state.posts.splice(index, 1);
 
     return { ...state };
+  }
+
+  if (action.type === CREATE_POST_SUCCESS) {
+    return {
+      ...state,
+      isLoadingData: false,
+      showAlert: false,
+      posts: [action.payload, ...state.posts],
+    };
+  }
+
+  if (action.type === CREATE_POST_ERROR) {
+    return { ...state, isLoadingData: false, showAlert: true };
   }
 
   throw new Error(`No such action: ${action}`);

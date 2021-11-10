@@ -11,6 +11,8 @@ import {
   GET_ALL_POSTS_ERROR,
   LIKE_POST,
   DELETE_POST,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_ERROR,
 } from '../utils/actions';
 
 import dataReducer from '../reducers/dataReducer';
@@ -56,6 +58,18 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  const createPost = async (post) => {
+    setLoading();
+
+    try {
+      const { data } = await axios.post('/posts', { ...post });
+
+      dispatch({ type: CREATE_POST_SUCCESS, payload: data.post });
+    } catch (error) {
+      dispatch({ type: CREATE_POST_ERROR });
+    }
+  };
+
   /**
    * We send like data to server and get back like info
    * Then we pass it to userContext, where we store likes array
@@ -98,12 +112,17 @@ const DataProvider = ({ children }) => {
   };
 
   /**
-   * Delete post from server
+   * Delete post and all post likes from server
    * @param {String} postId Post ID, which we need to delete
    */
   const deletePost = async (postId) => {
     try {
+      // delete post
       await axios.delete(`/posts/${postId}`);
+      // and delete all likes for that post
+      await axios.delete(`/posts/${postId}/like`);
+      // TODO delete all comments for that post
+      // TODO delete all notifications for that post
 
       dispatch({ type: DELETE_POST, payload: postId });
     } catch (error) {
@@ -118,6 +137,7 @@ const DataProvider = ({ children }) => {
     likePost,
     unLikePost,
     deletePost,
+    createPost,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
