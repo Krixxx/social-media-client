@@ -59,3 +59,23 @@ hr {
 .nav-container svg {
   color: #fff;
 }
+
+/* Create post styles */
+
+.close-btn {
+  position: absolute !important;
+  left: 91%;
+  top: 6%;
+}
+.submit-btn {
+  margin-top: 10px !important;
+  float: right;
+  position: relative;
+}
+.textfield {
+  margin-top: 10px !important;
+}
+.progress-spinner {
+  position: absolute !important;
+}
+/* End of Create post styles */

@@ -17,7 +17,9 @@ import { useDataContext } from '../context/dataContext';
 
 const CreatePost = () => {
   const [open, setOpen] = useState(false);
-  const [post, setPost] = useState('');
+  const [post, setPost] = useState({ message: '' });
+  const [error, setError] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const { createPost, isLoadingData: loading } = useDataContext();
 
@@ -25,93 +27,107 @@ const CreatePost = () => {
     setOpen(true);
   };
 
+  const removeError = () => {
+    setError('');
+    setIsError(false);
+  };
+
   const handleClose = () => {
     setOpen(false);
-    setPost('');
+    setPost({ message: '' });
+    removeError();
   };
 
   const handleChange = (e) => {
-    setPost({ [e.target.name]: e.target.value });
+    setPost({ message: e.target.value });
+    removeError();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (post !== '') {
+    if (post.message !== '') {
       createPost(post);
+      removeError();
 
-      if (open && !loading) {
-        setPost('');
-        setOpen(false);
+      if (!loading) {
+        handleClose();
       }
+    } else {
+      setIsError(true);
+      setError('Post cannot be empty!');
     }
   };
 
-  //   TODO - cannot style Dialog - find a way!
-
   return (
     <Wrapper>
-      <CustomButton onClick={handleOpen} tip='Create a Post!'>
+      <CustomButton onClick={handleOpen} tip='Create a Post!' color='primary'>
         <AddIcon />
       </CustomButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
-        <div className='contents'>
-          <CustomButton tip='Close' onClick={handleClose} className='closeBtn'>
-            <CloseIcon />
-          </CustomButton>
-          <DialogTitle>Create a new post</DialogTitle>
-          <DialogContent>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                name='message'
-                type='text'
-                label='Post'
-                multiline
-                rows='3'
-                plaseholder='Post your thoughts here!'
-                className='textfield'
-                onChange={handleChange}
-                fullWidth
-              />
-              <Button
-                type='submit'
-                variant='contained'
-                color='primary'
-                className='submitBtn'
-                disabled={loading}
-              >
-                Submit
-                {loading && (
-                  <CircularProgress size={30} className='progressBtn' />
-                )}
-              </Button>
-            </form>
-          </DialogContent>
-        </div>
+        <CustomButton
+          tip='Close'
+          onClick={handleClose}
+          tipClassName='close-btn'
+        >
+          <CloseIcon />
+        </CustomButton>
+        <DialogTitle>Create a new post</DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              name='message'
+              type='text'
+              label='Post'
+              multiline
+              rows='3'
+              placeholder='Post your thoughts here!'
+              helperText={error}
+              error={isError ? true : false}
+              className='textfield'
+              onChange={handleChange}
+              fullWidth
+            />
+            <Button
+              type='submit'
+              variant='contained'
+              color='primary'
+              className='submit-btn'
+              disabled={loading}
+            >
+              Submit
+              {loading && (
+                <CircularProgress size={30} className='progress-spinner' />
+              )}
+            </Button>
+          </form>
+        </DialogContent>
       </Dialog>
     </Wrapper>
   );
 };
 
+// Somehow this wrapper classes are not applied to styles.
+// All this CSS is also put to index.css
+// Some properties are made !important, since they must overwrite Material UI styles
+
 const Wrapper = styled.div`
-  .contents {
-    position: relative;
-  }
-  .closeBtn {
+  .close-btn {
     position: absolute;
-    left: 90%;
-    top: 5%;
-    /* float: right; */
+    left: 91%;
+    top: 6%;
   }
-  .submitBtn {
+  .submit-btn {
     margin-top: 10px;
+    float: right;
     position: relative;
   }
   .textfield {
     margin-top: 10px;
   }
-  .progressBtn {
+  .progress-spinner {
     position: absolute;
   }
 `;
+
 export default CreatePost;
