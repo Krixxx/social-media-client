@@ -7,12 +7,14 @@ import { useUserContext } from './userContext';
 
 import {
   SET_LOADING,
+  SET_UI_LOADING,
   GET_ALL_POSTS_SUCCESS,
   GET_ALL_POSTS_ERROR,
   LIKE_POST,
   DELETE_POST,
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
+  GET_SINGLE_POST,
 } from '../utils/actions';
 
 import dataReducer from '../reducers/dataReducer';
@@ -22,7 +24,9 @@ const user = localStorage.getItem('user');
 const initialState = {
   user: user ? JSON.parse(user) : null,
   isLoadingData: false,
+  isLoadingUI: false,
   showAlert: false,
+  post: {},
   posts: [],
   likes: [],
   comments: [],
@@ -43,6 +47,13 @@ const DataProvider = ({ children }) => {
   };
 
   /**
+   * Set UI loading to true
+   */
+  const setUILoading = () => {
+    dispatch({ type: SET_UI_LOADING });
+  };
+
+  /**
    * Get all posts.
    * Set loading true
    * Get all posts data from server and pass it to reducer
@@ -53,6 +64,18 @@ const DataProvider = ({ children }) => {
     try {
       const { data } = await axios.get('/public');
       dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data.posts });
+    } catch (error) {
+      dispatch({ type: GET_ALL_POSTS_ERROR });
+    }
+  };
+
+  const getSinglePost = async (postId) => {
+    setUILoading();
+
+    try {
+      const { data } = await axios.get(`/posts/${postId}`);
+
+      dispatch({ type: GET_SINGLE_POST, payload: data.post });
     } catch (error) {
       dispatch({ type: GET_ALL_POSTS_ERROR });
     }
@@ -138,6 +161,7 @@ const DataProvider = ({ children }) => {
     unLikePost,
     deletePost,
     createPost,
+    getSinglePost,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

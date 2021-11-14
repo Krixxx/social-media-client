@@ -1,17 +1,24 @@
 import {
   SET_LOADING,
+  SET_UI_LOADING,
   GET_ALL_POSTS_SUCCESS,
   GET_ALL_POSTS_ERROR,
   LIKE_POST,
   DELETE_POST,
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
+  GET_SINGLE_POST,
 } from '../utils/actions';
 
 const dataReducer = (state, action) => {
   // set loading state to true
   if (action.type === SET_LOADING) {
     return { ...state, isLoadingData: true, showAlert: false };
+  }
+
+  // set UI loading state to true
+  if (action.type === SET_UI_LOADING) {
+    return { ...state, isLoadingUI: true, showAlert: false };
   }
 
   // get all posts
@@ -21,6 +28,10 @@ const dataReducer = (state, action) => {
 
   if (action.type === GET_ALL_POSTS_ERROR) {
     return { ...state, isLoadingData: false, posts: [] };
+  }
+
+  if (action.type === GET_SINGLE_POST) {
+    return { ...state, isLoadingUI: false, post: action.payload };
   }
 
   /**

@@ -12,7 +12,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { CustomButton, DeletePost } from '.';
+import { CustomButton, DeletePost, PostDialog } from '.';
 
 import { useUserContext } from '../context/userContext';
 import { useDataContext } from '../context/dataContext';
@@ -126,6 +126,7 @@ const Post = ({ post }) => {
             <ChatIcon color='primary' />
           </CustomButton>
           <span>{commentCount} comments</span>
+          <PostDialog postId={postId} userId={userData._id} />
         </CardContent>
       </Card>
     </Wrapper>

@@ -60,50 +60,52 @@ const CreatePost = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <CustomButton onClick={handleOpen} tip='Create a Post!' color='primary'>
         <AddIcon />
       </CustomButton>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
-        <CustomButton
-          tip='Close'
-          onClick={handleClose}
-          tipClassName='close-btn'
-        >
-          <CloseIcon />
-        </CustomButton>
-        <DialogTitle>Create a new post</DialogTitle>
-        <DialogContent>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              name='message'
-              type='text'
-              label='Post'
-              multiline
-              rows='3'
-              placeholder='Post your thoughts here!'
-              helperText={error}
-              error={isError ? true : false}
-              className='textfield'
-              onChange={handleChange}
-              fullWidth
-            />
-            <Button
-              type='submit'
-              variant='contained'
-              color='primary'
-              className='submit-btn'
-              disabled={loading}
-            >
-              Submit
-              {loading && (
-                <CircularProgress size={30} className='progress-spinner' />
-              )}
-            </Button>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </Wrapper>
+      <Wrapper>
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
+          <CustomButton
+            tip='Close'
+            onClick={handleClose}
+            tipClassName='close-btn'
+          >
+            <CloseIcon />
+          </CustomButton>
+          <DialogTitle>Create a new post</DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                name='message'
+                type='text'
+                label='Post'
+                multiline
+                rows='3'
+                placeholder='Post your thoughts here!'
+                helperText={error}
+                error={isError ? true : false}
+                className='textfield'
+                onChange={handleChange}
+                fullWidth
+              />
+              <Button
+                type='submit'
+                variant='contained'
+                color='primary'
+                className='submit-btn'
+                disabled={loading}
+              >
+                Submit
+                {loading && (
+                  <CircularProgress size={30} className='progress-spinner' />
+                )}
+              </Button>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </Wrapper>
+    </>
   );
 };
 

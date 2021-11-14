@@ -1,5 +1,6 @@
 // UI reducer types
 export const SET_LOADING = 'SET_LOADING';
+export const SET_UI_LOADING = 'SET_UI_LOADING';
 
 // User reducer types
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
@@ -15,6 +16,7 @@ export const GET_ALL_LIKES = 'GET_ALL_LIKES';
 // Data reduces types
 export const GET_ALL_POSTS_SUCCESS = 'GET_ALL_POSTS_SUCCESS';
 export const GET_ALL_POSTS_ERROR = 'GET_ALL_POSTS_ERROR';
+export const GET_SINGLE_POST = 'GET_SINGLE_POST';
 export const LIKE_POST = 'LIKE_POST';
 export const UNLIKE_POST = 'UNLIKE_POST';
 export const DELETE_POST = 'DELETE_POST';

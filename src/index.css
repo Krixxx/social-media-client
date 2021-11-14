@@ -65,7 +65,7 @@ hr {
 .close-btn {
   position: absolute !important;
   left: 91%;
-  top: 6%;
+  top: 5%;
 }
 .submit-btn {
   margin-top: 10px !important;
@@ -79,3 +79,23 @@ hr {
   position: absolute !important;
 }
 /* End of Create post styles */
+
+/* PostDialog */
+.post-img-container {
+  width: 150px;
+  height: 150px;
+  padding: 10px;
+}
+.post-img-container img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.post-dialog-content {
+  padding: 20px;
+}
+.post-dialog-hr {
+  border: none;
+  margin: 4px;
+}

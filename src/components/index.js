@@ -6,6 +6,7 @@ import EditDetails from './EditDetails';
 import CustomButton from './CustomButton';
 import DeletePost from './DeletePost';
 import CreatePost from './CreatePost';
+import PostDialog from './PostDialog';
 
 export {
   Navbar,
@@ -16,4 +17,5 @@ export {
   CustomButton,
   DeletePost,
   CreatePost,
+  PostDialog,
 };
