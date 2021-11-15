@@ -91,7 +91,15 @@ const Profile = () => {
                 {website && (
                   <div className='item'>
                     <LinkIcon color='primary' />
-                    <a href={website} target='_blank' rel='noopener noreferrer'>
+                    <a
+                      href={
+                        website.startsWith('http') //is website address starts with http
+                          ? website // then use given address
+                          : `http://${website}` // else add http:// to the beginning of website
+                      }
+                      target='_blank'
+                      rel='noopener noreferrer external'
+                    >
                       {' '}
                       {website}
                     </a>
