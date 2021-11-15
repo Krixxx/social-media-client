@@ -7,6 +7,7 @@ import CustomButton from './CustomButton';
 import DeletePost from './DeletePost';
 import CreatePost from './CreatePost';
 import PostDialog from './PostDialog';
+import PostContainer from './PostsContainer';
 
 export {
   Navbar,
@@ -18,4 +19,5 @@ export {
   DeletePost,
   CreatePost,
   PostDialog,
+  PostContainer
 };
