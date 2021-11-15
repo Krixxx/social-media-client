@@ -45,8 +45,7 @@ const Profile = () => {
 
   useEffect(() => {
     getUserData();
-    // eslint-disable-next-line
-  }, []);
+  }, [getUserData]);
 
   return (
     <Wrapper>

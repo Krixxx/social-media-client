@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useCallback } from 'react';
 
 import axios from 'axios';
 import '../axios';
@@ -58,7 +58,7 @@ const DataProvider = ({ children }) => {
    * Set loading true
    * Get all posts data from server and pass it to reducer
    */
-  const getAllPosts = async () => {
+  const getAllPosts = useCallback(async () => {
     setLoading();
 
     try {
@@ -67,7 +67,7 @@ const DataProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: GET_ALL_POSTS_ERROR });
     }
-  };
+  }, []);
 
   const getSinglePost = async (postId) => {
     setUILoading();

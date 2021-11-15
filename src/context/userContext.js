@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useCallback } from 'react';
 
 import axios from 'axios';
 import '../axios';
@@ -105,7 +105,7 @@ const UserProvider = ({ children }) => {
   /**
    * Get all user datd
    */
-  const getUserData = async () => {
+  const getUserData = useCallback(async () => {
     setLoading();
 
     try {
@@ -118,7 +118,7 @@ const UserProvider = ({ children }) => {
       //set loading to false, set user to null and show alert
       dispatch({ type: REGISTER_USER_ERROR });
     }
-  };
+  }, []);
 
   /**
    * Log out user from server
