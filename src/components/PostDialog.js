@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { CustomButton } from '.';
+import { CustomButton, LikeButton } from '.';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
 //MUI
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-// import DialogTitle from '@mui/material/DialogTitle';
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 //Icons
 import CloseIcon from '@mui/icons-material/Close';
 import UnfoldMore from '@mui/icons-material/UnfoldMore';
+import ChatIcon from '@mui/icons-material/Chat';
 
 import { useDataContext } from '../context/dataContext';
 
@@ -26,8 +26,8 @@ const PostDialog = ({ postId, userId }) => {
     // _id: id,
     message,
     createdAt,
-    // likeCount,
-    // commentCount,
+    likeCount,
+    commentCount,
     image,
     userHandle,
   } = post;
@@ -61,15 +61,17 @@ const PostDialog = ({ postId, userId }) => {
           </CustomButton>
           <DialogContent className='post-dialog-content'>
             {isLoadingUI ? (
-              <CircularProgress className='post-dialog-loader' size={150} />
+              <div className='spinner-div'>
+                <CircularProgress thickness={2} size={150} />
+              </div>
             ) : (
-              <Grid container spacing={16}>
-                <Grid item sm={5}>
+              <Grid container>
+                <Grid item sm={4}>
                   <div className='post-img-container'>
                     <img src={image} alt='Profile' />
                   </div>
                 </Grid>
-                <Grid item sm={7}>
+                <Grid item sm={5}>
                   <Typography
                     component={Link}
                     color='primary'
@@ -84,6 +86,12 @@ const PostDialog = ({ postId, userId }) => {
                   </Typography>
                   <hr className='post-dialog-hr' />
                   <Typography variant='body1'>{message}</Typography>
+                  <LikeButton postId={postId} post={post} />
+                  <span>{likeCount} likes</span>
+                  <CustomButton tip='comments'>
+                    <ChatIcon color='primary' />
+                  </CustomButton>
+                  <span>{commentCount} comments</span>
                 </Grid>
               </Grid>
             )}
@@ -106,12 +114,18 @@ const Wrapper = styled.div`
     object-fit: cover;
     border-radius: 50%;
   }
-  .post-dialog-content {
-    padding: 20px;
-  }
   .post-dialog-hr {
     border: none;
     margin: 4px;
+  }
+  .close-btn {
+    position: absolute;
+    left: 91%;
+    top: 6%;
+  }
+  .spinner-div {
+    text-align: center;
+    margin: 30px auto;
   }
 `;
 

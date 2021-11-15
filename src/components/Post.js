@@ -9,60 +9,16 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ChatIcon from '@mui/icons-material/Chat';
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { CustomButton, DeletePost, PostDialog } from '.';
+import { CustomButton, DeletePost, PostDialog, LikeButton } from '.';
 
 import { useUserContext } from '../context/userContext';
-import { useDataContext } from '../context/dataContext';
 
 const Post = ({ post }) => {
   dayjs.extend(relativeTime);
 
-  const { user, userData, likes } = useUserContext();
-  const { likePost, unLikePost } = useDataContext();
+  const { user, userData } = useUserContext();
 
-  /**
-   * Check if we have likes array and if we have liked the post or not.
-   * @returns {Boolean} true or false
-   */
-  const likedPost = () => {
-    if (likes && likes.find((like) => like.postId === post._id)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  /**
-   * Returns like ID number from likes array (originated in userContext).
-   * @param {String} postId Given post ID
-   * @returns {String} like ID number
-   */
-  const getLikeId = (postId) => {
-    return likes.find((like) => like.postId === postId)._id;
-  };
-
-  /**
-   * Like post - we get the function from dataContext
-   * @param {String} postId Given post ID
-   */
-  const clickLike = (postId) => {
-    if (!likedPost()) {
-      likePost(postId);
-    }
-  };
-
-  /**
-   * Unlike post - we get the function from dataContext
-   * @param {String} postId Given post ID
-   */
-  const clickUnlike = (postId) => {
-    if (likedPost()) {
-      unLikePost(postId, getLikeId(postId));
-    }
-  };
   const {
     message,
     createdAt,
@@ -73,25 +29,6 @@ const Post = ({ post }) => {
     likeCount,
     createdBy,
   } = post;
-
-  /**
-   * Like button logic. Depends if we have liked the post or not, button design changes.
-   */
-  const likeButton = !user ? (
-    <CustomButton tip='like'>
-      <Link to='/login'>
-        <FavoriteBorder color='primary' />
-      </Link>
-    </CustomButton>
-  ) : likedPost() ? (
-    <CustomButton tip='Unlike' onClick={() => clickUnlike(postId)}>
-      <FavoriteIcon color='primary' />
-    </CustomButton>
-  ) : (
-    <CustomButton tip='Like' onClick={() => clickLike(postId)}>
-      <FavoriteBorder color='primary' />
-    </CustomButton>
-  );
 
   /**
    * Delete button logic. null, if user is not logged in our post is not created by logged in user
@@ -120,7 +57,7 @@ const Post = ({ post }) => {
             {dayjs(createdAt).fromNow()}
           </Typography>
           <Typography variant='body1'>{message}</Typography>
-          {likeButton}
+          <LikeButton postId={postId} post={post} />
           <span>{likeCount} likes</span>
           <CustomButton tip='comments'>
             <ChatIcon color='primary' />

@@ -59,3 +59,7 @@ hr {
 .nav-container svg {
   color: #fff;
 }
+.expand-button {
+  position: absolute !important;
+  left: 90%;
+}

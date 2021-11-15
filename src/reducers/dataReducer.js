@@ -43,8 +43,15 @@ const dataReducer = (state, action) => {
       (post) => post._id === action.payload._id
     );
 
-    // update post on current index
+    // update post on current index.
+    // This changes posts list, so on main screen we see like count change, when we like/unlike
     state.posts[index] = action.payload;
+
+    // check if post id is the same as liked post id, then change post is state.
+    // This changes single post, so when we have single post open and we like/unlike, we see like count change
+    if (state.post._id === action.payload._id) {
+      state.post = action.payload;
+    }
 
     return { ...state, isLoadingData: false };
   }

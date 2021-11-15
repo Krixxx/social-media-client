@@ -8,6 +8,7 @@ import DeletePost from './DeletePost';
 import CreatePost from './CreatePost';
 import PostDialog from './PostDialog';
 import PostContainer from './PostsContainer';
+import LikeButton from './LikeButton';
 
 export {
   Navbar,
@@ -19,5 +20,6 @@ export {
   DeletePost,
   CreatePost,
   PostDialog,
-  PostContainer
+  PostContainer,
+  LikeButton,
 };
