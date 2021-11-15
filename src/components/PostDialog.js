@@ -80,7 +80,7 @@ const PostDialog = ({ postId, userId }) => {
                   </Typography>
                   <hr className='post-dialog-hr' />
                   <Typography variant='body2' color='textSecondary'>
-                    {dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
+                    {dayjs(createdAt).format('H:mm, DD MMMM YYYY')}
                   </Typography>
                   <hr className='post-dialog-hr' />
                   <Typography variant='body1'>{message}</Typography>
