@@ -136,19 +136,18 @@ const Post = ({ post }) => {
 const Wrapper = styled.div`
   .card {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     position: relative;
   }
   .img-container {
     width: 150px;
+    max-height: 150px;
     padding: 10px;
   }
   .img-container img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
-  }
-  .content {
-    padding: 25px;
   }
   .date {
     color: hsl(210, 31%, 80%);
