@@ -64,8 +64,8 @@ const CreatePost = () => {
       <CustomButton onClick={handleOpen} tip='Create a Post!' color='primary'>
         <AddIcon />
       </CustomButton>
-      <Wrapper>
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
+        <Wrapper>
           <CustomButton
             tip='Close'
             onClick={handleClose}
@@ -103,21 +103,17 @@ const CreatePost = () => {
               </Button>
             </form>
           </DialogContent>
-        </Dialog>
-      </Wrapper>
+        </Wrapper>
+      </Dialog>
     </>
   );
 };
-
-// Somehow this wrapper classes are not applied to styles.
-// All this CSS is also put to index.css
-// Some properties are made !important, since they must overwrite Material UI styles
 
 const Wrapper = styled.div`
   .close-btn {
     position: absolute;
     left: 91%;
-    top: 6%;
+    top: 5%;
   }
   .submit-btn {
     margin-top: 10px;

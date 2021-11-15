@@ -50,8 +50,8 @@ const PostDialog = ({ postId, userId }) => {
       >
         <UnfoldMore color='primary' />
       </CustomButton>
-      <Wrapper>
-        <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
+        <Wrapper>
           <CustomButton
             tip='Close'
             onClick={handleClose}
@@ -88,14 +88,11 @@ const PostDialog = ({ postId, userId }) => {
               </Grid>
             )}
           </DialogContent>
-        </Dialog>
-      </Wrapper>
+        </Wrapper>
+      </Dialog>
     </>
   );
 };
-
-// Somehow this wrapper classes are not applied to styles.
-// All this CSS is also put to index.css
 
 const Wrapper = styled.div`
   .post-img-container {
