@@ -103,13 +103,31 @@ const UserProvider = ({ children }) => {
   };
 
   /**
-   * Get all user datd
+   * Get user data
    */
   const getUserData = useCallback(async () => {
     setLoading();
 
     try {
       const { data } = await axios.get('/users');
+
+      dispatch({ type: GET_CURRENT_USER, payload: data.user });
+
+      getAllUserLikes();
+    } catch (error) {
+      //set loading to false, set user to null and show alert
+      dispatch({ type: REGISTER_USER_ERROR });
+    }
+  }, []);
+
+  /**
+   * Get all user data for User page
+   */
+  const getAllUserData = useCallback(async (userId) => {
+    setLoading();
+
+    try {
+      const { data } = await axios.get(`/users/user/${userId}`);
 
       dispatch({ type: GET_CURRENT_USER, payload: data.user });
 
@@ -197,6 +215,7 @@ const UserProvider = ({ children }) => {
   const value = {
     ...state,
     getUserData,
+    getAllUserData,
     setLoading,
     register,
     login,

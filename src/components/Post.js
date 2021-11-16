@@ -33,39 +33,44 @@ const Post = ({ post }) => {
   /**
    * Delete button logic. null, if user is not logged in our post is not created by logged in user
    */
-  const deleteButton =
-    user && createdBy === userData._id ? <DeletePost postId={postId} /> : null;
+  // const deleteButton =
 
   return (
     <Wrapper>
-      <Card className='card'>
-        <div className='img-container'>
-          <img src={image} alt='user' />
-        </div>
-        <CardContent className='content'>
-          <Typography
-            className='handle'
-            variant='h5'
-            color='primary'
-            component={Link}
-            to={`/users/${createdBy}`}
-          >
-            {userHandle}
-          </Typography>
-          {deleteButton}
-          <Typography className='date' variant='body2'>
-            {dayjs(createdAt).fromNow()}
-          </Typography>
-          <Typography variant='body1'>{message}</Typography>
-          <LikeButton postId={postId} post={post} />
-          <span>{likeCount} likes</span>
-          <CustomButton tip='comments'>
-            <ChatIcon color='primary' />
-          </CustomButton>
-          <span>{commentCount} comments</span>
-          <PostDialog postId={postId} userId={userData._id} />
-        </CardContent>
-      </Card>
+      {userData ? (
+        <Card className='card'>
+          <div className='img-container'>
+            <img src={image} alt='user' />
+          </div>
+          <CardContent className='content'>
+            <Typography
+              className='handle'
+              variant='h5'
+              color='primary'
+              component={Link}
+              to={`/users/${createdBy}`}
+            >
+              {userHandle}
+            </Typography>
+            {user && createdBy === userData._id ? (
+              <DeletePost postId={postId} />
+            ) : null}
+            <Typography className='date' variant='body2'>
+              {dayjs(createdAt).fromNow()}
+            </Typography>
+            <Typography variant='body1'>{message}</Typography>
+            <LikeButton postId={postId} post={post} />
+            <span>{likeCount} likes</span>
+            <CustomButton tip='comments'>
+              <ChatIcon color='primary' />
+            </CustomButton>
+            <span>{commentCount} comments</span>
+            <PostDialog postId={postId} userId={userData._id} />
+          </CardContent>
+        </Card>
+      ) : (
+        <p>Loading...</p>
+      )}
     </Wrapper>
   );
 };

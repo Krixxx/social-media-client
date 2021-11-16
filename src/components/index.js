@@ -11,6 +11,8 @@ import PostContainer from './PostsContainer';
 import LikeButton from './LikeButton';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
+import StaticProfile from './StaticProfile';
+import UserPostContainer from './UserPostContainer';
 
 export {
   Navbar,
@@ -26,4 +28,6 @@ export {
   LikeButton,
   Comments,
   CommentForm,
+  StaticProfile,
+  UserPostContainer,
 };

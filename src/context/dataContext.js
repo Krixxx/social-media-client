@@ -20,6 +20,7 @@ import {
   CLEAR_COMMENTS,
   POST_COMMENT_SUCCESS,
   POST_COMMENT_ERROR,
+  GET_ALL_USER_POSTS,
 } from '../utils/actions';
 
 import dataReducer from '../reducers/dataReducer';
@@ -69,6 +70,21 @@ const DataProvider = ({ children }) => {
     try {
       const { data } = await axios.get('/public');
       dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data.posts });
+    } catch (error) {
+      dispatch({ type: GET_ALL_POSTS_ERROR });
+    }
+  }, []);
+
+  /**
+   * Get all single user posts
+   */
+  const getAllUserPosts = useCallback(async (userId) => {
+    try {
+      const { data: posts } = await axios.get('/posts', {
+        params: { name: userId },
+      });
+
+      dispatch({ type: GET_ALL_USER_POSTS, payload: posts.posts });
     } catch (error) {
       dispatch({ type: GET_ALL_POSTS_ERROR });
     }
@@ -219,6 +235,7 @@ const DataProvider = ({ children }) => {
     getAllCommentsOnPost,
     clearComments,
     postComment,
+    getAllUserPosts,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

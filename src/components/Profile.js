@@ -23,11 +23,11 @@ const Profile = () => {
   const { user, userData, getUserData, isLoading, uploadImage, logout } =
     useUserContext();
 
+  const { _id: id, name, createdAt, image, location, website } = userData;
+
   const handleLogout = () => {
     logout();
   };
-
-  const { _id: id, name, createdAt, image, location, website } = userData;
 
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];

@@ -38,7 +38,12 @@ const userReducer = (state, action) => {
 
   //set user to null and do not show alert.
   if (action.type === LOGOUT_USER) {
-    return { ...state, user: null, showAlert: false };
+    return {
+      ...state,
+      likes: [],
+      user: null,
+      showAlert: false,
+    };
   }
 
   if (action.type === UPLOAD_IMAGE_ERROR) {

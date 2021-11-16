@@ -13,6 +13,7 @@ import {
   CLEAR_COMMENTS,
   POST_COMMENT_SUCCESS,
   POST_COMMENT_ERROR,
+  GET_ALL_USER_POSTS,
 } from '../utils/actions';
 
 const dataReducer = (state, action) => {
@@ -33,6 +34,10 @@ const dataReducer = (state, action) => {
 
   if (action.type === GET_ALL_POSTS_ERROR) {
     return { ...state, isLoadingData: false, posts: [] };
+  }
+
+  if (action.type === GET_ALL_USER_POSTS) {
+    return { ...state, isLoadingData: false, posts: action.payload };
   }
 
   if (action.type === GET_SINGLE_POST) {
