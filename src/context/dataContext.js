@@ -15,6 +15,11 @@ import {
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
   GET_SINGLE_POST,
+  GET_ALL_COMMENTS_FOR_POST,
+  GET_ALL_COMMENTS_ERROR,
+  CLEAR_COMMENTS,
+  POST_COMMENT_SUCCESS,
+  POST_COMMENT_ERROR,
 } from '../utils/actions';
 
 import dataReducer from '../reducers/dataReducer';
@@ -135,7 +140,7 @@ const DataProvider = ({ children }) => {
   };
 
   /**
-   * Delete post and all post likes from server
+   * Delete post and all post likes, comments and notifications from server
    * @param {String} postId Post ID, which we need to delete
    */
   const deletePost = async (postId) => {
@@ -144,12 +149,61 @@ const DataProvider = ({ children }) => {
       await axios.delete(`/posts/${postId}`);
       // and delete all likes for that post
       await axios.delete(`/posts/${postId}/like`);
-      // TODO delete all comments for that post
+      // delete all comments for that post
+      await axios.delete(`/posts/${postId}/comment`);
       // TODO delete all notifications for that post
 
       dispatch({ type: DELETE_POST, payload: postId });
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  /**
+   * Get all comement for given post
+   * @param {String} postId Post ID, for which we want to fetch comments
+   */
+  const getAllCommentsOnPost = async (postId) => {
+    setUILoading();
+
+    try {
+      const { data } = await axios.get(`/public/${postId}/comment`);
+
+      dispatch({
+        type: GET_ALL_COMMENTS_FOR_POST,
+        payload: data.allCommentsOnPost,
+      });
+    } catch (error) {
+      dispatch({ type: GET_ALL_COMMENTS_ERROR });
+    }
+  };
+
+  /**
+   * Clear comments array when post dialog is closed
+   */
+  const clearComments = () => {
+    dispatch({ type: CLEAR_COMMENTS });
+  };
+
+  /**
+   * Post a comment to a post
+   * @param {String} postId Post ID, which we want to comment
+   * @param {Object} comment Comment object {"message":"....."}
+   */
+  const postComment = async (postId, comment) => {
+    setUILoading();
+
+    try {
+      const { data } = await axios.post(`/posts/${postId}/comment`, comment);
+
+      const { data: post } = await axios.get(`/posts/${postId}`);
+
+      dispatch({
+        type: POST_COMMENT_SUCCESS,
+        payload: { comment: data.comment, post: post.post },
+      });
+    } catch (error) {
+      dispatch({ type: POST_COMMENT_ERROR });
     }
   };
 
@@ -162,6 +216,9 @@ const DataProvider = ({ children }) => {
     deletePost,
     createPost,
     getSinglePost,
+    getAllCommentsOnPost,
+    clearComments,
+    postComment,
   };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

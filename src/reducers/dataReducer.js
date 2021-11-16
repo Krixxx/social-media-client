@@ -8,6 +8,11 @@ import {
   CREATE_POST_SUCCESS,
   CREATE_POST_ERROR,
   GET_SINGLE_POST,
+  GET_ALL_COMMENTS_FOR_POST,
+  GET_ALL_COMMENTS_ERROR,
+  CLEAR_COMMENTS,
+  POST_COMMENT_SUCCESS,
+  POST_COMMENT_ERROR,
 } from '../utils/actions';
 
 const dataReducer = (state, action) => {
@@ -78,6 +83,44 @@ const dataReducer = (state, action) => {
 
   if (action.type === CREATE_POST_ERROR) {
     return { ...state, isLoadingData: false, showAlert: true };
+  }
+
+  /**Get comments for single post and put them to "comments" array */
+  if (action.type === GET_ALL_COMMENTS_FOR_POST) {
+    return { ...state, isLoadingUI: false, comments: action.payload };
+  }
+
+  if (action.type === GET_ALL_COMMENTS_ERROR) {
+    return { ...state, isLoadingUI: false, comments: [] };
+  }
+
+  if (action.type === CLEAR_COMMENTS) {
+    return { ...state, comments: [] };
+  }
+
+  if (action.type === POST_COMMENT_SUCCESS) {
+    let index = state.posts.findIndex(
+      (post) => post._id === action.payload.post._id
+    );
+
+    // update posts list comment count
+    state.posts[index] = action.payload.post;
+
+    // update post Dialog comment count
+    if (state.post._id === action.payload.post._id) {
+      state.post = action.payload.post;
+    }
+
+    return {
+      ...state,
+      isLoadingUI: false,
+      showAlert: false,
+      comments: [action.payload.comment, ...state.comments],
+    };
+  }
+
+  if (action.type === POST_COMMENT_ERROR) {
+    return { ...state, isLoadingUI: false, showAlert: true };
   }
 
   throw new Error(`No such action: ${action}`);

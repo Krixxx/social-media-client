@@ -9,6 +9,8 @@ import CreatePost from './CreatePost';
 import PostDialog from './PostDialog';
 import PostContainer from './PostsContainer';
 import LikeButton from './LikeButton';
+import Comments from './Comments';
+import CommentForm from './CommentForm';
 
 export {
   Navbar,
@@ -22,4 +24,6 @@ export {
   PostDialog,
   PostContainer,
   LikeButton,
+  Comments,
+  CommentForm,
 };

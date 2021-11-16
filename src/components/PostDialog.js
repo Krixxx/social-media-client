@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { CustomButton, LikeButton } from '.';
+import { CustomButton, LikeButton, Comments, CommentForm } from '.';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
@@ -20,7 +20,14 @@ import { useDataContext } from '../context/dataContext';
 const PostDialog = ({ postId, userId }) => {
   const [open, setOpen] = useState(false);
 
-  const { getSinglePost, isLoadingUI, post } = useDataContext();
+  const {
+    getSinglePost,
+    isLoadingUI,
+    post,
+    comments,
+    getAllCommentsOnPost,
+    clearComments,
+  } = useDataContext();
 
   const {
     // _id: id,
@@ -35,10 +42,12 @@ const PostDialog = ({ postId, userId }) => {
   const handleOpen = () => {
     setOpen(true);
     getSinglePost(postId);
+    getAllCommentsOnPost(postId);
   };
 
   const handleClose = () => {
     setOpen(false);
+    clearComments();
   };
 
   return (
@@ -50,54 +59,59 @@ const PostDialog = ({ postId, userId }) => {
       >
         <UnfoldMore color='primary' />
       </CustomButton>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
-        <Wrapper>
-          <CustomButton
-            tip='Close'
-            onClick={handleClose}
-            tipClassName='close-btn'
-          >
-            <CloseIcon />
-          </CustomButton>
-          <DialogContent className='post-dialog-content'>
-            {isLoadingUI ? (
-              <div className='spinner-div'>
-                <CircularProgress thickness={2} size={150} />
-              </div>
-            ) : (
-              <Grid container>
-                <Grid item sm={4}>
-                  <div className='post-img-container'>
-                    <img src={image} alt='Profile' />
-                  </div>
+      {open && (
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
+          <Wrapper>
+            <CustomButton
+              tip='Close'
+              onClick={handleClose}
+              tipClassName='close-btn'
+            >
+              <CloseIcon />
+            </CustomButton>
+            <DialogContent className='post-dialog-content'>
+              {isLoadingUI ? (
+                <div className='spinner-div'>
+                  <CircularProgress thickness={2} size={150} />
+                </div>
+              ) : (
+                <Grid container>
+                  <Grid item sm={4}>
+                    <div className='post-img-container'>
+                      <img src={image} alt='Profile' />
+                    </div>
+                  </Grid>
+                  <Grid item sm={5}>
+                    <Typography
+                      component={Link}
+                      color='primary'
+                      variant='h5'
+                      to={`/users/${userId}`}
+                    >
+                      @{userHandle}
+                    </Typography>
+                    <hr className='post-dialog-hr' />
+                    <Typography variant='body2' color='textSecondary'>
+                      {dayjs(createdAt).format('H:mm, DD MMMM YYYY')}
+                    </Typography>
+                    <hr className='post-dialog-hr' />
+                    <Typography variant='body1'>{message}</Typography>
+                    <LikeButton postId={postId} post={post} />
+                    <span>{likeCount} likes</span>
+                    <CustomButton tip='comments'>
+                      <ChatIcon color='primary' />
+                    </CustomButton>
+                    <span>{commentCount} comments</span>
+                  </Grid>
+                  <hr className='visible-separator' />
+                  <CommentForm postId={postId} />
+                  <Comments comments={comments} />
                 </Grid>
-                <Grid item sm={5}>
-                  <Typography
-                    component={Link}
-                    color='primary'
-                    variant='h5'
-                    to={`/users/${userId}`}
-                  >
-                    @{userHandle}
-                  </Typography>
-                  <hr className='post-dialog-hr' />
-                  <Typography variant='body2' color='textSecondary'>
-                    {dayjs(createdAt).format('H:mm, DD MMMM YYYY')}
-                  </Typography>
-                  <hr className='post-dialog-hr' />
-                  <Typography variant='body1'>{message}</Typography>
-                  <LikeButton postId={postId} post={post} />
-                  <span>{likeCount} likes</span>
-                  <CustomButton tip='comments'>
-                    <ChatIcon color='primary' />
-                  </CustomButton>
-                  <span>{commentCount} comments</span>
-                </Grid>
-              </Grid>
-            )}
-          </DialogContent>
-        </Wrapper>
-      </Dialog>
+              )}
+            </DialogContent>
+          </Wrapper>
+        </Dialog>
+      )}
     </>
   );
 };

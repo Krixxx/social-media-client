@@ -43,10 +43,10 @@ a {
   text-decoration: none;
   color: --clr-grey-1;
 }
-hr {
+/* hr {
   border: none;
   border-top: 1px solid var(--clr-grey-8);
-}
+} */
 
 .container {
   margin: 80px auto 0 auto;
@@ -62,4 +62,13 @@ hr {
 .expand-button {
   position: absolute !important;
   left: 90%;
+}
+.invisible-separator {
+  border: none;
+  margin: 4px;
+}
+.visible-separator {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 20;
 }
