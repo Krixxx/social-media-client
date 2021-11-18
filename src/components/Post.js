@@ -60,11 +60,16 @@ const Post = ({ post }) => {
             </Typography>
             <Typography variant='body1'>{message}</Typography>
             <LikeButton postId={postId} post={post} />
-            <span>{likeCount} likes</span>
+            <span>
+              {likeCount} {likeCount > 1 || likeCount === 0 ? 'likes' : 'like'}
+            </span>
             <CustomButton tip='comments'>
               <ChatIcon color='primary' />
             </CustomButton>
-            <span>{commentCount} comments</span>
+            <span>
+              {commentCount}{' '}
+              {commentCount > 1 || commentCount === 0 ? 'comments' : 'comment'}
+            </span>
             <PostDialog postId={postId} userId={userData._id} />
           </CardContent>
         </Card>

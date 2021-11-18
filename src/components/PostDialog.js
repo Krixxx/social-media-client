@@ -97,11 +97,19 @@ const PostDialog = ({ postId, userId }) => {
                     <hr className='post-dialog-hr' />
                     <Typography variant='body1'>{message}</Typography>
                     <LikeButton postId={postId} post={post} />
-                    <span>{likeCount} likes</span>
+                    <span>
+                      {likeCount}{' '}
+                      {likeCount > 1 || likeCount === 0 ? 'likes' : 'like'}
+                    </span>
                     <CustomButton tip='comments'>
                       <ChatIcon color='primary' />
                     </CustomButton>
-                    <span>{commentCount} comments</span>
+                    <span>
+                      {commentCount}{' '}
+                      {commentCount > 1 || commentCount === 0
+                        ? 'comments'
+                        : 'comment'}
+                    </span>
                   </Grid>
                   <hr className='visible-separator' />
                   <CommentForm postId={postId} />
