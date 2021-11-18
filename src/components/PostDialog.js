@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { CustomButton, LikeButton, Comments, CommentForm } from '.';
 import dayjs from 'dayjs';
@@ -17,8 +17,9 @@ import ChatIcon from '@mui/icons-material/Chat';
 
 import { useDataContext } from '../context/dataContext';
 
-const PostDialog = ({ postId, userId }) => {
+const PostDialog = ({ postId, userId, createdBy, openDialog }) => {
   const [open, setOpen] = useState(false);
+  const [oldPath, setOldPath] = useState('');
 
   const {
     getSinglePost,
@@ -29,26 +30,43 @@ const PostDialog = ({ postId, userId }) => {
     clearComments,
   } = useDataContext();
 
-  const {
-    // _id: id,
-    message,
-    createdAt,
-    likeCount,
-    commentCount,
-    image,
-    userHandle,
-  } = post;
+  const { message, createdAt, likeCount, commentCount, image, userHandle } =
+    post;
 
   const handleOpen = () => {
+    // we set oldPath state, which is current path
+    let currentPath = window.location.pathname;
+
+    // new path is our userId and postId
+    const path = `/users/${createdBy}/post/${postId}`;
+
+    if (currentPath === path) {
+      currentPath = `/users/${createdBy}`;
+    }
+    // show our new path
+    window.history.pushState(null, null, path);
+
+    // set current path to state, so we can use it in handleClose
+    setOldPath(currentPath);
+
     setOpen(true);
     getSinglePost(postId);
     getAllCommentsOnPost(postId);
   };
 
   const handleClose = () => {
+    // when we close dialog, show again our old path
+    window.history.pushState(null, null, oldPath);
+
     setOpen(false);
     clearComments();
   };
+
+  useEffect(() => {
+    if (openDialog) {
+      handleOpen();
+    }
+  }, [openDialog]);
 
   return (
     <>

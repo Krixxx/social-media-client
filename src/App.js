@@ -13,6 +13,7 @@ function App() {
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/register' element={<Signup />} />
           <Route exact path='/users/:id' element={<User />} />
+          <Route exact path='/users/:id/post/:postId' element={<User />} />
           {/* <Route path='*' element={<Error />} /> */}
         </Routes>
       </div>

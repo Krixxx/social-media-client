@@ -14,7 +14,7 @@ import { CustomButton, DeletePost, PostDialog, LikeButton } from '.';
 
 import { useUserContext } from '../context/userContext';
 
-const Post = ({ post }) => {
+const Post = ({ post, openDialog }) => {
   dayjs.extend(relativeTime);
 
   const { user, userData } = useUserContext();
@@ -70,7 +70,12 @@ const Post = ({ post }) => {
               {commentCount}{' '}
               {commentCount > 1 || commentCount === 0 ? 'comments' : 'comment'}
             </span>
-            <PostDialog postId={postId} userId={userData._id} />
+            <PostDialog
+              postId={postId}
+              createdBy={createdBy}
+              userId={userData._id}
+              openDialog={openDialog}
+            />
           </CardContent>
         </Card>
       ) : (
