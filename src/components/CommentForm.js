@@ -18,16 +18,27 @@ const CommentForm = ({ postId }) => {
   const { user } = useUserContext();
   const { postComment } = useDataContext();
 
+  /**
+   * clear error states.
+   */
   const removeError = () => {
     setError('');
     setIsError(false);
   };
 
+  /**
+   * Handle changes in comment textinput. Also clear errors, if there are any.
+   * @param {Event} e event
+   */
   const handleChange = (e) => {
     setComment({ message: e.target.value });
     removeError();
   };
 
+  /**
+   * Submit comment. If no text in comment textfield, the set the error.
+   * @param {Event} e event
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 

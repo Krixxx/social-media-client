@@ -90,6 +90,10 @@ const DataProvider = ({ children }) => {
     }
   }, []);
 
+  /**
+   * Get single post by giving postId
+   * @param {String} postId
+   */
   const getSinglePost = async (postId) => {
     setUILoading();
 
@@ -102,6 +106,10 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Create post
+   * @param {Object} post Post object
+   */
   const createPost = async (post) => {
     setLoading();
 
@@ -136,7 +144,7 @@ const DataProvider = ({ children }) => {
 
   /**
    * We delete like data from server
-   * Then we pass postId to userContext, where we delete lik from likes array, with matchind postId
+   * Then we pass postId to userContext, where we delete lik from likes array, with matching postId
    * We get updated post information from server and update it in our posts array
    * @param {String} postId Post ID, which user unliked
    * @param {String} likeId Current like ID, which we want to delete
