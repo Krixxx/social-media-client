@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDataContext } from '../context/dataContext';
-import { Post } from '../components';
+import { Post, PostSkeleton } from '../components';
 
 import Grid from '@mui/material/Grid';
 
@@ -15,7 +15,7 @@ const PostContainer = () => {
   return (
     <Grid item sm={8} xs={12}>
       {isLoadingData ? (
-        <p>Loading..</p>
+        <PostSkeleton />
       ) : posts ? (
         posts.map((post, index) => {
           return <Post key={post._id} post={post} />;

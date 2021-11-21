@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { StaticProfile, UserPostContainer } from '../components';
+import {
+  StaticProfile,
+  UserPostContainer,
+  ProfileSkeleton,
+} from '../components';
 import { useParams } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 
@@ -46,7 +50,7 @@ const User = () => {
         />
         <Grid item sm={4} xs={12}>
           {profile === null ? (
-            <p>Loading profile...</p>
+            <ProfileSkeleton />
           ) : (
             <StaticProfile profile={profile} loading={loading} />
           )}

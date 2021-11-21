@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { ProfileSkeleton } from '../components';
 
 // MUi
 import Paper from '@mui/material/Paper';
@@ -73,7 +74,7 @@ const StaticProfile = ({ profile, loading }) => {
           </div>
         </Paper>
       ) : (
-        <p>Loading...</p>
+        <ProfileSkeleton />
       )}
     </Wrapper>
   );

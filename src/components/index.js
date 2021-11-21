@@ -14,6 +14,8 @@ import CommentForm from './CommentForm';
 import StaticProfile from './StaticProfile';
 import UserPostContainer from './UserPostContainer';
 import Notifications from './Notifications';
+import PostSkeleton from './skeletons/PostSkeleton';
+import ProfileSkeleton from './skeletons/ProfileSkeleton';
 
 export {
   Navbar,
@@ -32,4 +34,6 @@ export {
   StaticProfile,
   UserPostContainer,
   Notifications,
+  PostSkeleton,
+  ProfileSkeleton,
 };

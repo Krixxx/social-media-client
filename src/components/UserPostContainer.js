@@ -1,5 +1,5 @@
 import React from 'react';
-import { Post } from '.';
+import { Post, PostSkeleton } from '.';
 
 import Grid from '@mui/material/Grid';
 
@@ -7,7 +7,7 @@ const UserPostContainer = ({ posts, loading, postIdParam }) => {
   return (
     <Grid item sm={8} xs={12}>
       {loading ? (
-        <p>Loading data...</p>
+        <PostSkeleton />
       ) : !posts ? (
         <p>No posts from this user</p>
       ) : !postIdParam ? ( //if there is not postId parameter given, then render all user posts as usual

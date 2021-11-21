@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { EditDetails, CustomButton } from '../components';
+import { EditDetails, CustomButton, ProfileSkeleton } from '../components';
 
 // MUI
 import Button from '@mui/material/Button';
@@ -149,7 +149,7 @@ const Profile = () => {
           </Paper>
         )
       ) : (
-        <p>Loading...</p>
+        <ProfileSkeleton />
       )}
     </Wrapper>
   );
