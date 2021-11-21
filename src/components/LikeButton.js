@@ -41,6 +41,11 @@ const LikeButton = ({ postId, post }) => {
   const clickLike = (postId) => {
     if (!likedPost()) {
       likePost(postId);
+
+      // this data we need to pass with like, so we can create notification in the server
+      // console.log(postId);
+      // console.log(userData.name); need to import userData from useUserContext()
+      // console.log(post.createdBy);
     }
   };
 

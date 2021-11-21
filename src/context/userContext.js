@@ -15,6 +15,7 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   GET_ALL_LIKES,
+  MARK_NOTIFICATIONS_READ,
 } from '../utils/actions';
 
 import userReducer from '../reducers/userReducer';
@@ -29,6 +30,7 @@ const initialState = {
   isLoading: false,
   showAlert: false,
   likes: [],
+  notifications: [],
 };
 
 const UserContext = React.createContext();
@@ -90,7 +92,7 @@ const UserProvider = ({ children }) => {
   };
 
   /**
-   * Get all user likes
+   * Get all user likes - NOT USED
    */
   const getAllUserLikes = async () => {
     try {
@@ -103,7 +105,7 @@ const UserProvider = ({ children }) => {
   };
 
   /**
-   * Get user data
+   * Get user data - we get user data, likes and notifications
    */
   const getUserData = useCallback(async () => {
     setLoading();
@@ -111,9 +113,9 @@ const UserProvider = ({ children }) => {
     try {
       const { data } = await axios.get('/users');
 
-      dispatch({ type: GET_CURRENT_USER, payload: data.user });
+      dispatch({ type: GET_CURRENT_USER, payload: data.userData });
 
-      getAllUserLikes();
+      // getAllUserLikes();
     } catch (error) {
       //set loading to false, set user to null and show alert
       dispatch({ type: REGISTER_USER_ERROR });
@@ -131,7 +133,7 @@ const UserProvider = ({ children }) => {
 
       dispatch({ type: GET_CURRENT_USER, payload: data.user });
 
-      getAllUserLikes();
+      // getAllUserLikes();
     } catch (error) {
       //set loading to false, set user to null and show alert
       dispatch({ type: REGISTER_USER_ERROR });
@@ -212,6 +214,22 @@ const UserProvider = ({ children }) => {
     dispatch({ type: UNLIKE_POST, payload: like });
   };
 
+  /**
+   * Mark user notifications read
+   * @param {Array} notificationIds Array of notification IDs
+   */
+  const markNotificationsRead = async (notificationIds) => {
+    //TODO: send out array of notification Id's.
+
+    try {
+      await axios.patch('/notifications', { _id: notificationIds });
+
+      dispatch({ type: MARK_NOTIFICATIONS_READ });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const value = {
     ...state,
     getUserData,
@@ -224,6 +242,7 @@ const UserProvider = ({ children }) => {
     updateUser,
     likeUserPost,
     unLikeUserPost,
+    markNotificationsRead,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

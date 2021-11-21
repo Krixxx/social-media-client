@@ -10,6 +10,7 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   GET_ALL_LIKES,
+  MARK_NOTIFICATIONS_READ,
 } from '../utils/actions';
 
 const userReducer = (state, action) => {
@@ -33,7 +34,13 @@ const userReducer = (state, action) => {
   }
 
   if (action.type === GET_CURRENT_USER) {
-    return { ...state, isLoading: false, userData: action.payload };
+    return {
+      ...state,
+      isLoading: false,
+      userData: action.payload.user,
+      likes: [...action.payload.likes],
+      notifications: [...action.payload.notifications],
+    };
   }
 
   //set user to null and do not show alert.
@@ -57,6 +64,7 @@ const userReducer = (state, action) => {
     return { ...state, isLoading: false };
   }
 
+  // NOT USED
   if (action.type === GET_ALL_LIKES) {
     return {
       ...state,
@@ -83,6 +91,15 @@ const userReducer = (state, action) => {
       ...state,
       likes: state.likes.filter((like) => like.postId !== action.payload),
     };
+  }
+
+  if (action.type === MARK_NOTIFICATIONS_READ) {
+    // loop through notifications and change read to true
+    state.notifications.forEach((notification) => {
+      notification.read = true;
+    });
+
+    return { ...state };
   }
 
   throw new Error(`No such action: ${action}`);

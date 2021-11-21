@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CustomButton, CreatePost } from '../components';
+import { CustomButton, CreatePost, Notifications } from '../components';
 
 import { Link } from 'react-router-dom';
 
@@ -11,7 +11,6 @@ import Button from '@mui/material/Button';
 
 // Icons
 import HomeIcon from '@mui/icons-material/Home';
-import Notifications from '@mui/icons-material/Notifications';
 
 import { useUserContext } from '../context/userContext';
 
@@ -29,9 +28,8 @@ const Navbar = () => {
                 <HomeIcon />
               </CustomButton>
             </Link>
-            <CustomButton tip='Notifications'>
-              <Notifications />
-            </CustomButton>
+
+            <Notifications />
           </>
         ) : (
           <>

@@ -175,7 +175,6 @@ const DataProvider = ({ children }) => {
       await axios.delete(`/posts/${postId}/like`);
       // delete all comments for that post
       await axios.delete(`/posts/${postId}/comment`);
-      // TODO delete all notifications for that post
 
       dispatch({ type: DELETE_POST, payload: postId });
     } catch (error) {

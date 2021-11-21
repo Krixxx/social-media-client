@@ -13,6 +13,7 @@ import Comments from './Comments';
 import CommentForm from './CommentForm';
 import StaticProfile from './StaticProfile';
 import UserPostContainer from './UserPostContainer';
+import Notifications from './Notifications';
 
 export {
   Navbar,
@@ -30,4 +31,5 @@ export {
   CommentForm,
   StaticProfile,
   UserPostContainer,
+  Notifications,
 };
