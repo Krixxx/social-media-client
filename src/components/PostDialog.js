@@ -66,6 +66,7 @@ const PostDialog = ({ postId, userId, createdBy, openDialog }) => {
     if (openDialog) {
       handleOpen();
     }
+    // eslint-disable-next-line
   }, [openDialog]);
 
   return (

@@ -12,7 +12,6 @@ import { useDataContext } from '../context/dataContext';
 const User = () => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
-  const [postIdParam, setPostIdParam] = useState('');
   const { id: userId, postId } = useParams();
   const { user } = useUserContext();
   const { getAllUserPosts, posts } = useDataContext();
@@ -36,19 +35,13 @@ const User = () => {
     getAllUserPosts(userId);
   }, [userId, getAllUserPosts]);
 
-  useEffect(() => {
-    if (postId) {
-      setPostIdParam(postId);
-    }
-  }, [postId]);
-
   return (
     <>
       {!user && <Navigate to='/login' />}
       <Grid container padding={2} spacing={2}>
         <UserPostContainer
           posts={posts}
-          postIdParam={postIdParam}
+          postIdParam={postId}
           loading={loading}
         />
         <Grid item sm={4} xs={12}>
