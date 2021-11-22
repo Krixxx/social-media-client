@@ -33,6 +33,7 @@ const initialState = {
   isLoadingUI: false,
   showAlert: false,
   post: {},
+  postCount: 0,
   posts: [],
   likes: [],
   comments: [],
@@ -63,13 +64,19 @@ const DataProvider = ({ children }) => {
    * Get all posts.
    * Set loading true
    * Get all posts data from server and pass it to reducer
+   *  @param {Number} page Which page to get from server
+   *  @param {Number} limit How many items per page
    */
-  const getAllPosts = useCallback(async () => {
+  const getAllPosts = useCallback(async (page, limit) => {
     setLoading();
 
     try {
-      const { data } = await axios.get('/public');
-      dispatch({ type: GET_ALL_POSTS_SUCCESS, payload: data.posts });
+      const { data } = await axios.get(`/public?page=${page}&limit=${limit}`);
+      // const { data } = await axios.get(`/public`);
+      dispatch({
+        type: GET_ALL_POSTS_SUCCESS,
+        payload: { posts: data.posts, count: data.count },
+      });
     } catch (error) {
       dispatch({ type: GET_ALL_POSTS_ERROR });
     }

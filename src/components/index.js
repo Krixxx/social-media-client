@@ -16,6 +16,7 @@ import UserPostContainer from './UserPostContainer';
 import Notifications from './Notifications';
 import PostSkeleton from './skeletons/PostSkeleton';
 import ProfileSkeleton from './skeletons/ProfileSkeleton';
+import Pagination from './Pagination';
 
 export {
   Navbar,
@@ -36,4 +37,5 @@ export {
   Notifications,
   PostSkeleton,
   ProfileSkeleton,
+  Pagination,
 };

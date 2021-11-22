@@ -29,7 +29,12 @@ const dataReducer = (state, action) => {
 
   // get all posts
   if (action.type === GET_ALL_POSTS_SUCCESS) {
-    return { ...state, isLoadingData: false, posts: action.payload };
+    return {
+      ...state,
+      isLoadingData: false,
+      posts: action.payload.posts,
+      postCount: action.payload.count,
+    };
   }
 
   if (action.type === GET_ALL_POSTS_ERROR) {
