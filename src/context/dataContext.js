@@ -42,7 +42,7 @@ const initialState = {
 const DataContext = React.createContext();
 
 const DataProvider = ({ children }) => {
-  const { likeUserPost, unLikeUserPost } = useUserContext();
+  const { likeUserPost, unLikeUserPost, setPage } = useUserContext();
 
   const [state, dispatch] = useReducer(dataReducer, initialState);
 
@@ -114,7 +114,7 @@ const DataProvider = ({ children }) => {
   };
 
   /**
-   * Create post
+   * Create post and set page number to 0
    * @param {Object} post Post object
    */
   const createPost = async (post) => {
@@ -124,6 +124,8 @@ const DataProvider = ({ children }) => {
       const { data } = await axios.post('/posts', { ...post });
 
       dispatch({ type: CREATE_POST_SUCCESS, payload: data.post });
+
+      setPage(0);
     } catch (error) {
       dispatch({ type: CREATE_POST_ERROR });
     }
