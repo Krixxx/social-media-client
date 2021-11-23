@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useDataContext } from '../context/dataContext';
+import { useUserContext } from '../context/userContext';
 import { Post, PostSkeleton, Pagination } from '../components';
 
 import Grid from '@mui/material/Grid';
@@ -8,8 +9,9 @@ import Grid from '@mui/material/Grid';
 const PostContainer = () => {
   //get data from dataContext()
   const { isLoadingData, getAllPosts, posts, postCount } = useDataContext();
+  const { page, setPage } = useUserContext();
   //set default page number 0
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
   //how many items per page we want to see
   const itemsPerPage = 5;
   //how many pages do we have
@@ -29,28 +31,40 @@ const PostContainer = () => {
 
   //go to previous page
   const prevPage = () => {
-    setPage((oldPage) => {
-      let prevPage = oldPage - 1;
+    let prevPage = page - 1;
+    if (prevPage < 0) {
+      prevPage = maxPages - 1;
+    }
+    setPage(prevPage);
 
-      if (prevPage < 0) {
-        prevPage = maxPages - 1;
-      }
-
-      return prevPage;
-    });
+    // setPage((oldPage) => {
+    //   let prevPage = oldPage - 1;
+    //   if (prevPage < 0) {
+    //     prevPage = maxPages - 1;
+    //   }
+    //   return prevPage;
+    // });
   };
 
   //go to next page
   const nextPage = () => {
-    setPage((oldPage) => {
-      let nextPage = oldPage + 1;
+    let nextPage = page + 1;
 
-      if (nextPage > maxPages - 1) {
-        nextPage = 0;
-      }
+    if (nextPage > maxPages - 1) {
+      nextPage = 0;
+    }
 
-      return nextPage;
-    });
+    setPage(nextPage);
+
+    // setPage((oldPage) => {
+    //   let nextPage = oldPage + 1;
+
+    //   if (nextPage > maxPages - 1) {
+    //     nextPage = 0;
+    //   }
+
+    //   return nextPage;
+    // });
   };
 
   return (

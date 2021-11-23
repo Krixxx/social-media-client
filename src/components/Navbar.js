@@ -15,7 +15,13 @@ import HomeIcon from '@mui/icons-material/Home';
 import { useUserContext } from '../context/userContext';
 
 const Navbar = () => {
-  const { user } = useUserContext();
+  const { user, page, setPage } = useUserContext();
+
+  const setHomePage = () => {
+    if (page !== 0) {
+      setPage(0);
+    }
+  };
 
   return (
     <AppBar>
@@ -24,7 +30,7 @@ const Navbar = () => {
           <>
             <CreatePost />
             <Link to='/'>
-              <CustomButton tip='Home'>
+              <CustomButton tip='Home' onClick={setHomePage}>
                 <HomeIcon />
               </CustomButton>
             </Link>
