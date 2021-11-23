@@ -8,8 +8,16 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 
-const PostSkeleton = () => {
-  const content = Array.from({ length: 5 }).map((item, index) => (
+const PostSkeleton = ({ itemsPerPage }) => {
+  let items = itemsPerPage;
+
+  //if items per page are more than 5, we show 5 skeletons for loading.
+  //or if there are no props given, then show 5 skeletons.
+  if (items === 0 || items > 5) {
+    items = 5;
+  }
+
+  const content = Array.from({ length: items }).map((item, index) => (
     <Card className='card' key={index}>
       <CardMedia className='cover' image={NoImg} />
       <CardContent className='card-content'>
@@ -27,8 +35,9 @@ const PostSkeleton = () => {
 
 const Wrapper = styled.div`
   .card {
+    max-height: 156px;
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   .card-content {
     width: 100%;
