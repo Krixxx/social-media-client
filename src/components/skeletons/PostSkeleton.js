@@ -57,7 +57,7 @@ const Wrapper = styled.div`
   .handle {
     width: 60px;
     height: 18px;
-    background-color: #00bcd4;
+    background-color: #1976d2;
     margin-bottom: 7px;
   }
   .date {

@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+//MUI Icons
+import NavigateBefore from '@mui/icons-material/NavigateBefore';
+import NavigateNext from '@mui/icons-material/NavigateNext';
+
 const Pagination = ({ prevPage, nextPage, handlePage, page, maxPages }) => {
   //create an array of pages
   const pages = Array.from({ length: maxPages }, (_, i) => i);
@@ -9,7 +13,7 @@ const Pagination = ({ prevPage, nextPage, handlePage, page, maxPages }) => {
     <Wrapper>
       <div className='btn-container'>
         <button className='prev-btn' onClick={prevPage}>
-          prev
+          <NavigateBefore />
         </button>
         {pages.map((_, index) => {
           return (
@@ -23,7 +27,7 @@ const Pagination = ({ prevPage, nextPage, handlePage, page, maxPages }) => {
           );
         })}
         <button className='next-btn' onClick={nextPage}>
-          next
+          <NavigateNext />
         </button>
       </div>
     </Wrapper>
@@ -31,10 +35,13 @@ const Pagination = ({ prevPage, nextPage, handlePage, page, maxPages }) => {
 };
 
 const Wrapper = styled.div`
+  margin-top: 20px;
   text-align: center;
   button {
     border: none;
     text-decoration: none;
+    background: none;
+    cursor: pointer;
     font-size: 1rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -43,20 +50,27 @@ const Wrapper = styled.div`
     width: 100%;
     display: flex;
     gap: 10px;
+    align-items: center;
     justify-content: center;
   }
-  button .prev-btn.next-btn {
-    color: #00bcd4;
+  button svg {
+    color: #1976d2;
   }
   .prev-btn {
+    display: flex;
+    align-items: center;
+  }
+  .next-btn {
+    display: flex;
+    align-items: center;
   }
   .page-btn {
     width: 10px;
   }
   .active-btn {
     font-weight: bold;
-  }
-  .next-btn {
+    transform: scale(1.1);
+    color: #1976d2;
   }
 `;
 

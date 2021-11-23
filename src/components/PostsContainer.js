@@ -11,7 +11,7 @@ const PostContainer = () => {
   //set default page number 0
   const [page, setPage] = useState(0);
   //how many items per page we want to see
-  const itemsPerPage = 4;
+  const itemsPerPage = 5;
   //how many pages do we have
   const maxPages = Math.ceil(postCount / itemsPerPage);
 
