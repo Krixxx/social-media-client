@@ -13,6 +13,7 @@ export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
 export const GET_ALL_LIKES = 'GET_ALL_LIKES';
 export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
+export const SET_PAGE = 'SET_PAGE';
 
 // Data reduces types
 export const GET_ALL_POSTS_SUCCESS = 'GET_ALL_POSTS_SUCCESS';

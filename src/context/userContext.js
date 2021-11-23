@@ -16,6 +16,7 @@ import {
   UNLIKE_POST,
   GET_ALL_LIKES,
   MARK_NOTIFICATIONS_READ,
+  SET_PAGE,
 } from '../utils/actions';
 
 import userReducer from '../reducers/userReducer';
@@ -31,6 +32,7 @@ const initialState = {
   showAlert: false,
   likes: [],
   notifications: [],
+  page: 0,
 };
 
 const UserContext = React.createContext();
@@ -230,6 +232,10 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const setPage = (page) => {
+    dispatch({ type: SET_PAGE, payload: page });
+  };
+
   const value = {
     ...state,
     getUserData,
@@ -243,6 +249,7 @@ const UserProvider = ({ children }) => {
     likeUserPost,
     unLikeUserPost,
     markNotificationsRead,
+    setPage,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

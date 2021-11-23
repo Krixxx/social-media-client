@@ -11,6 +11,7 @@ import {
   UNLIKE_POST,
   GET_ALL_LIKES,
   MARK_NOTIFICATIONS_READ,
+  SET_PAGE,
 } from '../utils/actions';
 
 const userReducer = (state, action) => {
@@ -100,6 +101,10 @@ const userReducer = (state, action) => {
     });
 
     return { ...state };
+  }
+
+  if (action.type === SET_PAGE) {
+    return { ...state, page: action.payload };
   }
 
   throw new Error(`No such action: ${action}`);
