@@ -100,6 +100,17 @@ const Login = () => {
           <Grid item sm />
         </Grid>
       </Wrapper>
+      <DemoUser>
+        <h1>For testing:</h1>
+        <div className='flex'>
+          <p>Email:</p>
+          <p>demo@user.test</p>
+        </div>
+        <div className='flex'>
+          <p>Password:</p>
+          <p>123456</p>
+        </div>
+      </DemoUser>
     </>
   );
 };
@@ -135,4 +146,20 @@ const Wrapper = styled.div`
   }
 `;
 
+const DemoUser = styled.div`
+  padding-top: 4rem;
+  max-width: 250px;
+  margin: 0 auto;
+  text-align: center;
+
+  h1 {
+    font-size: 1rem;
+  }
+
+  .flex {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+`;
 export default Login;
